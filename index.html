@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RX Threat Dashboard v10.1</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
+<style>
+:root{
+  --primary:#22c55e;
+  --primary-dark:#16a34a;
+  --bg:#0f172a;
+  --card-bg:#1e293b;
+  --text:#e2e8f0;
+  --safe:#4ade80;
+  --medium:#facc15;
+  --risk:#ef4444;
+  --shadow:0 10px 25px rgba(0,0,0,0.5);
+  --border-radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+body{background:var(--bg);color:var(--text);display:flex;justify-content:center;align-items:flex-start;min-height:100vh;padding:20px;overflow:hidden;position:relative;}
+.container{max-width:800px;width:100%;background:var(--card-bg);border-radius:var(--border-radius);padding:30px;box-shadow:var(--shadow);position:relative;z-index:2;}
+h1{text-align:center;margin-bottom:20px;font-weight:700;}
+.input-group{position:relative;margin-bottom:15px;}
+.input-group input{width:100%;padding:12px 40px;border-radius:12px;border:none;background:#0f172a;color:#fff;}
+.input-group .icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:18px;color:#22c55e;}
+button{width:100%;padding:14px;border:none;border-radius:12px;background:var(--primary);color:#fff;font-weight:600;cursor:pointer;transition:0.3s;margin-bottom:10px;}
+button:hover:not(:disabled){background:var(--primary-dark);box-shadow:0 0 10px var(--primary);}
+button:disabled{opacity:0.6;cursor:not-allowed;}
+.progress-container{width:100%;height:10px;background:#0f172a;border-radius:12px;overflow:hidden;margin-top:15px;display:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--primary),#3b82f6);transition:0.2s linear;}
+.result{margin-top:15px;font-weight:600;min-height:22px;text-align:center;font-size:16px;}
+.safe{color:var(--safe);}
+.medium{color:var(--medium);}
+.risk{color:var(--risk);}
+#chart{margin-top:20px;}
+.tooltip{font-size:12px;color:#aaa;margin-bottom:10px;text-align:center;}
+.history{margin-top:15px;font-size:13px;color:#94a3b8;}
+footer{text-align:center;color:#aaa;margin-top:20px;font-size:13px;position:relative;z-index:2;}
+/* ---- Animasi Lottie ---- */
+#lottie-bg{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.15;z-index:1;pointer-events:none;}
+.kals-text{
+  position:absolute;font-weight:800;color:#22c55e;font-size:28px;pointer-events:none;
+  transition:transform 0.1s ease-out;
+}
+.kals-text:nth-child(1){top:10%;left:5%;}
+.kals-text:nth-child(2){top:80%;left:70%;}
+.particle{
+  position:absolute;width:8px;height:8px;background:var(--primary);border-radius:50%;opacity:0.7;animation:float 6s linear infinite;
+}
+@keyframes float{
+  0%{transform:translate(0,0);}
+  50%{transform:translate(50px,-50px);}
+  100%{transform:translate(0,0);}
+}
+</style>
+</head>
+<body>
+
+<div id="lottie-bg"></div>
+<span class="kals-text">kalsNotDev</span>
+<span class="kals-text">kalsNotDev</span>
+
+<div class="container">
+<h1>RX Threat Dashboard v10.1</h1>
+<div class="tooltip">Enter URL starting with https:// or choose a file</div>
+
+<div class="input-group">
+  <span class="icon">🔍</span>
+  <input type="text" id="urlInput" placeholder="Enter URL to scan">
+</div>
+
+<div style="text-align:center;margin:10px 0;color:#aaa;">OR</div>
+
+<div class="input-group">
+  <span class="icon">📁</span>
+  <input type="file" id="fileInput">
+</div>
+
+<button id="scanBtn">Run Scan</button>
+
+<div class="progress-container" id="progressBox">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="result" id="resultText"></div>
+<canvas id="chart"></canvas>
+
+<div class="history" id="historyBox"><strong>Recent Scans:</strong><br>None</div>
+<footer>Powered by kalsNotDev 🖐 | Version 10.1</footer>
+</div>
+
+<script>
+// Lottie background animasi orang berantem
+lottie.loadAnimation({
+  container: document.getElementById('lottie-bg'),
+  renderer: 'svg',
+  loop: true,
+  autoplay: true,
+  path: 'https://assets6.lottiefiles.com/packages/lf20_3o7TKx.json' // contoh animasi berantem
+});
+
+// floating particle random
+for(let i=0;i<30;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  p.style.top=Math.random()*100+'%';
+  p.style.left=Math.random()*100+'%';
+  p.style.animationDuration=(4+Math.random()*4)+'s';
+  document.body.appendChild(p);
+}
+
+// interaktif follow mouse kalsNotDev
+document.addEventListener('mousemove',e=>{
+  const texts=document.querySelectorAll('.kals-text');
+  texts.forEach((t,i)=>{
+    t.style.transform=`translate(${e.clientX/(i+2)}px, ${e.clientY/(i+2)}px) rotate(${e.clientX/50}deg)`;
+  });
+});
+
+// script scan sama kayak versi sebelumnya...
+</script>
+</body>
+    </html>
